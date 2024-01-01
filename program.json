@@ -1,0 +1,49 @@
+{
+    "0":{
+        "0645":{"name":"NHKラジオ英会話", "category":"english"},
+        "0830":{"name":"英会話タイムトライアル", "category":"english"},
+        "0910":{"name":"エンジョイ・シンプル・イングリッシュ", "category":"english"},
+        "0915":{"name":"ラジオビジネス英語", "category":"english"},
+        "0930":{"name":"ニュースで学ぶ現代英語", "category":"english"}
+    },
+    "1":{
+        "0645":{"name":"NHKラジオ英会話", "category":"english"},
+        "0830":{"name":"英会話タイムトライアル", "category":"english"},
+        "0915":{"name":"ラジオビジネス英語", "category":"english"},
+        "0910":{"name":"エンジョイ・シンプル・イングリッシュ", "category":"english"},
+        "0930":{"name":"ニュースで学ぶ現代英語", "category":"english"},
+        "0100":{"name":"深夜の馬鹿力" ,"category":"comedian"}
+    },
+    "2":{
+        "0645":{"name":"NHKラジオ英会話", "category":"english"},
+        "0830":{"name":"英会話タイムトライアル", "category":"english"},
+        "0910":{"name":"エンジョイ・シンプル・イングリッシュ", "category":"english"},
+        "0915":{"name":"ラジオビジネス英語", "category":"english"},
+        "0930":{"name":"ニュースで学ぶ現代英語", "category":"english"},
+        "0000":{"name":"DCガレージ", "category":"comedian"},
+        "0100":{"name":"爆笑問題カーボーイ", "category":"comedian"}
+    },
+    "3":{
+        "0645":{"name":"NHKラジオ英会話", "category":"english"},
+        "0830":{"name":"英会話タイムトライアル", "category":"english"},
+        "0910":{"name":"エンジョイ・シンプル・イングリッシュ", "category":"english"},
+        "0915":{"name":"ラジオビジネス英語", "category":"english"},
+        "0930":{"name":"ニュースで学ぶ現代英語", "category":"english"},
+        "0100":{"name":"不毛な議論", "category":"comedian"}
+    },
+    "4":{
+        "0645":{"name":"NHKラジオ英会話", "category":"english"},
+        "0830":{"name":"英会話タイムトライアル", "category":"english"},
+        "0910":{"name":"エンジョイ・シンプル・イングリッシュ", "category":"english"},
+        "0915":{"name":"ラジオビジネス英語", "category":"english"},
+        "0930":{"name":"ニュースで学ぶ現代英語", "category":"english"},
+        "0000":{"name":"ハライチのターン", "category":"comedian"},
+        "0100":{"name":"メガネびいき", "category":"comedian"}
+    },
+    "5":{
+        "0100":{"name":"バナナムーン", "category":"comedian"}
+    },
+    "6":{
+        "0100":{"name":"オードリーのオールナイトニッポン", "category":"comedian"}
+    }
+}
