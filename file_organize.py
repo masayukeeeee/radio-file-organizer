@@ -1,38 +1,37 @@
 import os
 from pathlib import Path
-import re
-from datetime import datetime as dt
-import json
-from shutil import ExecError
 
-from lib.utils import is_unnamed_file, extract_time_info, check_category_folder_existence, check_title_folder_exsistence, check_monthly_folder_existence
+from lib.utils import is_unnamed_file
+from lib.programClass import Program, Schedule, RawItem
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 SCR_DIR = ROOT_DIR / 'script'
+TMP_DIR = ROOT_DIR / 'uncategorized'
 
-with open(SCR_DIR / 'program.json') as f:
-    program_map = json.load(f)
+s = Schedule()
+s.load_programs(SCR_DIR / 'program.json')
 
+unnamed_mp3_files = [RawItem(f.name) for f in TMP_DIR.iterdir() if f.is_file() and is_unnamed_file(f.name)]
 
-# for fn in os.listdir(root_dir + '/uncategorized/'):
-#     if is_unnamed_file(fn):
-#         time = extract_time_info(fn)
-#         try:
-#             program_info = program_map[time['weekday']][time['onair_time']]
-#             name = program_info['name']
-#             category = program_info['category']
-#             yymm = time['yymm']
-#             if not check_category_folder_existence(root_dir, category):
-#                 os.makedirs(root_dir + '/{category}/'.format(category=category))
-#             if not check_title_folder_exsistence(root_dir, category, name):
-#                 os.makedirs(root_dir + '/{category}/{name}'.format(category=category, name=name))
-#             if not check_monthly_folder_existence(root_dir, category, name, yymm):
-#                 os.makedirs(root_dir + '/{category}/{name}/{yymm}'.format(category=category, name=name, yymm=yymm))
-#             new_fn = root_dir + '/{category}/{name}/{yymm}/'.format(category=category, name=name, yymm=yymm) + name + fn
-#             os.rename(root_dir + '/uncategorized/' + fn, new_fn)
-#             print(fn + ' has renamed by ' + new_fn)
-#         except Exception as e:
-#             print('a program is not exist for ' + fn)
-#             print(e)
-                    
-# print('done!!')
+for raw_item in unnamed_mp3_files:
+    try:
+        p = s.extract_program(raw_item.weekday, raw_item.start_time)
+        new_fn = raw_item.get_saveName(p)
+
+        # make directory
+        if not os.path.isdir(ROOT_DIR / p.category):
+            os.makedirs(ROOT_DIR / p.category)
+        if not os.path.isdir(ROOT_DIR / p.category / p.name):
+            os.makedirs(ROOT_DIR / p.category / p.name)
+        if not os.path.isdir(ROOT_DIR / p.category / p.name / raw_item.yymm):
+            os.makedirs(ROOT_DIR / p.category / p.name / raw_item.yymm)
+        
+        os.rename(TMP_DIR / raw_item.filename, ROOT_DIR / new_fn)
+        print(f'{raw_item.filename} has renamed by {new_fn}')
+    except Exception as e:
+        print(f'a program is not exist for {raw_item.filename}')
+        print(e)
+
+# import ipdb; ipdb.set_trace()
+
+print('done!!')
