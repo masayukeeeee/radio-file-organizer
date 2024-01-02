@@ -32,6 +32,4 @@ for raw_item in unnamed_mp3_files:
         print(f'a program is not exist for {raw_item.filename}')
         print(e)
 
-# import ipdb; ipdb.set_trace()
-
 print('done!!')
