@@ -1,23 +1,15 @@
 # test for utils.py with pytest
-
 import pytest
-import os, sys
+import sys
 import re
-from datetime import datetime as dt
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 SCR_DIR = ROOT_DIR / 'script'
-TMP_DIR = ROOT_DIR / 'uncategorized'
 
 sys.path.append(str(SCR_DIR))
 
-
 from lib.utils import is_unnamed_file
-from lib.programClass import Program, Schedule, RawItem
-
-s = Schedule()
-s.load_programs(SCR_DIR / 'program.json')
 
 # parametrize
 @pytest.mark.parametrize(
