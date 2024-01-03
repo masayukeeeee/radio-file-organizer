@@ -1,0 +1,5 @@
+# ignore files for python 
+.DS_Store
+
+# pycache
+__pycache__/
