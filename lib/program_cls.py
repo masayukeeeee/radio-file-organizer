@@ -43,7 +43,7 @@ class Schedule:
         Load program information from json file.
         
         Args:
-            json_file_path (str): _description_
+            json_file_path (str): path to json file.
         
         Returns:
             None    
@@ -62,10 +62,10 @@ class Schedule:
         Extract programs by weekday.
         
         Args:
-            weekday (str): _description_
+            weekday (str): monday is 0, tuesday is 1, ...
         
         Returns:
-            List[Program]: _description_
+            List[Program]: list of program instances.
         """
         return [ p for p in self.programs if p.weekday == weekday ]
 
@@ -74,10 +74,10 @@ class Schedule:
         Extract programs by start_time.
         
         Args:
-            start_time (str): _description_
+            start_time (str): hhmm. 0000 - 2359
         
         Returns:
-            List[Program]: _description_
+            List[Program]: list of program instances.
         """
         return [ p for p in self.programs if p.start_time == start_time ]
 
@@ -86,10 +86,10 @@ class Schedule:
         Extract programs by category.
         
         Args:
-            category (str): _description_
+            category (str): english or comedian
         
         Returns:
-            List[Program]: _description_
+            List[Program]: list of program instances.
         """
         return [ p for p in self.programs if p.category == category ]
 
@@ -98,10 +98,10 @@ class Schedule:
         Extract programs by name.
         
         Args:
-            name (str): _description_
+            name (str): title of program.
         
         Returns:
-            List[Program]: _description_
+            List[Program]: list of program instances.
         """
         return [ p for p in self.programs if p.name == name ]
 
@@ -110,12 +110,12 @@ class Schedule:
         Extract program by weekday, start_time, and category.
         
         Args:
-            weekday (str): _description_
-            start_time (str): _description_
-            category (str): _description_
+            weekday (str): monday is 0, tuesday is 1, ...
+            start_time (str): hhmm. 0000 - 2359
+            category (str): english or comedian
         
         Returns:
-            Program: _description_
+            Program: program instance.
         """
         res = [ p for p in self.programs if p.weekday == weekday and p.start_time == start_time ][0]
         return res
