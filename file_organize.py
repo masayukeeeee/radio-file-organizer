@@ -1,56 +1,35 @@
-import os, pathlib
-import re
-from datetime import datetime as dt
-import json
-from shutil import ExecError
+"""
+This file is for organizing files in TMP_DIR
+"""
+import os
+from pathlib import Path
 
-root_dir = '/Users/sakaimasayuki/Dropbox/radio'
+from lib.utils import is_unnamed_file
+from lib.program_cls import Schedule, RawItem
 
-with open(root_dir + '/script/program.json') as f:
-    program_map = json.load(f)
+ROOT_DIR = Path(__file__).resolve().parents[1]
+SCR_DIR = ROOT_DIR / 'script'
+TMP_DIR = ROOT_DIR / 'uncategorized'
 
-def is_unnamed_file(fn):
-    prog = re.compile(r'^AM\d{6}-\d{4}.MP3$')
-    result = prog.match(fn)
-    return result
+s = Schedule()
+s.load_programs(str(SCR_DIR / 'program.json'))
 
-def extract_time_info(fn):
-    yymmdd = '20' + fn[2:8]
-    date = dt.strptime(yymmdd, '%Y%m%d')
-    yymm = yymmdd[:6]
-    weekday = str(date.weekday())
-    onair_time = fn.split('-')[1].split('.')[0]    
-    return {'date':date, 'weekday':weekday, 'onair_time':onair_time, 'yymm':yymm}
+unnamed_mp3_files = [RawItem(f.name) for f in TMP_DIR.iterdir()
+                     if f.is_file() and is_unnamed_file(f.name)]
 
-def check_category_folder_existence(root_dir, category):
-    return os.path.isdir(root_dir + '/{cat}/'.format(cat=category))
+for raw_item in unnamed_mp3_files:
+    p = s.extract_program(raw_item.weekday, raw_item.start_time)
+    new_fn = raw_item.get_save_name(p)
 
-def check_title_folder_exsistence(root_dir, category, name):
-    return os.path.isdir(root_dir + '/{cat}/{name}'.format(cat=category, name=name))
+    # make directory
+    if not os.path.isdir(ROOT_DIR / p.category):
+        os.makedirs(ROOT_DIR / p.category)
+    if not os.path.isdir(ROOT_DIR / p.category / p.name):
+        os.makedirs(ROOT_DIR / p.category / p.name)
+    if not os.path.isdir(ROOT_DIR / p.category / p.name / raw_item.yymm):
+        os.makedirs(ROOT_DIR / p.category / p.name / raw_item.yymm)
 
-def check_monthly_folder_existence(root_dir, category, name, yymm):
-    return os.path.isdir(root_dir + '/{cat}/{name}/{yymm}'.format(cat=category, name=name, yymm=yymm))
+    os.rename(TMP_DIR / raw_item.filename, ROOT_DIR / new_fn)
+    print(f'{raw_item.filename} has renamed by {new_fn}')
 
-
-for fn in os.listdir(root_dir + '/uncategorized/'):
-    if is_unnamed_file(fn):
-        time = extract_time_info(fn)
-        try:
-            program_info = program_map[time['weekday']][time['onair_time']]
-            name = program_info['name']
-            category = program_info['category']
-            yymm = time['yymm']
-            if not check_category_folder_existence(root_dir, category):
-                os.makedirs(root_dir + '/{category}/'.format(category=category))
-            if not check_title_folder_exsistence(root_dir, category, name):
-                os.makedirs(root_dir + '/{category}/{name}'.format(category=category, name=name))
-            if not check_monthly_folder_existence(root_dir, category, name, yymm):
-                os.makedirs(root_dir + '/{category}/{name}/{yymm}'.format(category=category, name=name, yymm=yymm))
-            new_fn = root_dir + '/{category}/{name}/{yymm}/'.format(category=category, name=name, yymm=yymm) + name + fn
-            os.rename(root_dir + '/uncategorized/' + fn, new_fn)
-            print(fn + ' has renamed by ' + new_fn)
-        except Exception as e:
-            print('a program is not exist for ' + fn)
-            print(e)
-                    
 print('done!!')

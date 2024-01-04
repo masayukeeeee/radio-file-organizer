@@ -1,0 +1,8 @@
+# ignore files for python 
+.DS_Store
+
+# pycache
+__pycache__/
+
+# mypy
+.mypy_cache/
