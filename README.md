@@ -9,3 +9,9 @@ OLYMPUSのラジオサーバーから取り込んだファイルを整理するP
 * 関数化 `lib/utils.py`にまとめる
 * データクラス化 `lib/hogeClass.py`にまとめる
 * テスト実装 `tests` フォルダにテストを実装する
+
+## Docs
+
+```shell
+$ poetry run sphinx-build -b html source docs
+```
