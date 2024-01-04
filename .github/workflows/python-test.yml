@@ -29,8 +29,8 @@ jobs:
         poetry run pytest tests/
     - name: Run mypy
       run: |
-        poetry mypy lib
-        poetry mypy file_organize.py
+        poetry run mypy lib
+        poetry run mypy file_organize.py
     - name: Run flake8
       run: |
         poetry run flake8 lib
