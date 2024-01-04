@@ -1,15 +1,12 @@
-# test for utils.py with pytest
-import pytest
-import sys
+"""
+Test for utils.py
+"""
 import re
 from pathlib import Path
+import pytest
+from lib.utils import is_unnamed_file
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
-SCR_DIR = ROOT_DIR / 'script'
-
-sys.path.append(str(SCR_DIR))
-
-from lib.utils import is_unnamed_file
 
 # parametrize
 @pytest.mark.parametrize(

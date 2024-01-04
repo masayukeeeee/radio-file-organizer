@@ -1,8 +1,9 @@
-# define dataclass for program
+"""
+define dataclass for program
+"""
+
 from datetime import datetime as dt
 from dataclasses import dataclass
-from typing import List
-from pathlib import Path
 import json
 
 @dataclass
@@ -36,7 +37,7 @@ class Schedule:
 
     def __init__(self):
         self.programs = []
-    
+
     def load_programs(self, json_file_path: str):
         """
         Load program information from json file.
@@ -47,15 +48,15 @@ class Schedule:
         Returns:
             None    
         """
-        with open(json_file_path) as f:
+        with open(json_file_path, 'r', encoding='utf-8') as f:
             program_map = json.load(f)
-        
+
         for w, ps in program_map.items():
             for h, p in ps.items():
                 program = Program(p['name'], p['category'], w, h)
                 self.programs.append(program)
-                
-        
+
+
     def extract_programs_by_weekday(self, weekday: str):
         """
         Extract programs by weekday.
@@ -67,7 +68,7 @@ class Schedule:
             List[Program]: _description_
         """
         return [ p for p in self.programs if p.weekday == weekday ]
-    
+
     def extract_programs_by_start_time(self, start_time: str):
         """
         Extract programs by start_time.
@@ -79,7 +80,7 @@ class Schedule:
             List[Program]: _description_
         """
         return [ p for p in self.programs if p.start_time == start_time ]
-    
+
     def extract_programs_by_category(self, category: str):
         """
         Extract programs by category.
@@ -91,7 +92,7 @@ class Schedule:
             List[Program]: _description_
         """
         return [ p for p in self.programs if p.category == category ]
-    
+
     def extract_programs_by_name(self, name: str):
         """
         Extract programs by name.
@@ -103,7 +104,7 @@ class Schedule:
             List[Program]: _description_
         """
         return [ p for p in self.programs if p.name == name ]
-    
+
     def extract_program(self, weekday: str, start_time: str):
         """
         Extract program by weekday, start_time, and category.
@@ -116,19 +117,26 @@ class Schedule:
         Returns:
             Program: _description_
         """
-        return [ p for p in self.programs if p.weekday == weekday and p.start_time == start_time ][0]
-    
+        res = [ p for p in self.programs if p.weekday == weekday and p.start_time == start_time ][0]
+        return res
+
 
 @dataclass
 class RawItem:
+    """
+    This class is for managing raw item.
+    """
     filename: str
-    
+
     def __post_init__(self):
         self.yymmdd = '20' + self.filename[2:8]
         self.date = dt.strptime(self.yymmdd, '%Y%m%d')
         self.yymm = self.yymmdd[:6]
         self.weekday = str(self.date.weekday())
         self.start_time = self.filename.split('-')[1].split('.')[0]
-        
-    def get_saveName(self, p: Program):
+
+    def get_save_name(self, p: Program):
+        """
+        Get save name of the file.
+        """
         return f"{p.category}/{p.name}/{self.yymm}/{p.name}{self.filename}"

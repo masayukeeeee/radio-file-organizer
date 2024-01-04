@@ -1,7 +1,11 @@
-import os
+"""
+This file is for utility functions.
+
+Methods:
+    - is_unnamed_file: check if the file is unnamed file.
+"""
+
 import re
-from datetime import datetime as dt
-from lib.programClass import Program, Schedule
 
 def is_unnamed_file(fn: str):
     """
