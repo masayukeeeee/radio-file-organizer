@@ -8,6 +8,7 @@ from lib.utils import is_unnamed_file
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
+
 # parametrize
 @pytest.mark.parametrize(
     'raw_name, expected',
@@ -23,6 +24,7 @@ def test_is_unnamed_file_error(raw_name, expected):
     """
     actual = is_unnamed_file(raw_name)
     assert actual == expected
+
 
 @pytest.mark.parametrize(
     'raw_name, expected',

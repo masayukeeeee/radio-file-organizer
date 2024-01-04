@@ -6,11 +6,11 @@ from datetime import datetime as dt
 from dataclasses import dataclass
 import json
 
+
 @dataclass
 class Program:
     """
     This class is for managing program information.
-    
     Attributes:
         name: name of program.
         category: category of program.
@@ -23,13 +23,12 @@ class Program:
     weekday: str
     start_time: str
 
+
 class Schedule:
     """
     This class is for managing schedule of programs.
-    
     Attributes:
         programs: List of Program objects.
-    
     Methods:
         - load programs from json file.
         - extract programs by weekday / start_time / category.
@@ -41,12 +40,10 @@ class Schedule:
     def load_programs(self, json_file_path: str):
         """
         Load program information from json file.
-        
         Args:
             json_file_path (str): path to json file.
-        
         Returns:
-            None    
+            None
         """
         with open(json_file_path, 'r', encoding='utf-8') as f:
             program_map = json.load(f)
@@ -56,68 +53,60 @@ class Schedule:
                 program = Program(p['name'], p['category'], w, h)
                 self.programs.append(program)
 
-
     def extract_programs_by_weekday(self, weekday: str):
         """
         Extract programs by weekday.
-        
         Args:
             weekday (str): monday is 0, tuesday is 1, ...
-        
         Returns:
             List[Program]: list of program instances.
         """
-        return [ p for p in self.programs if p.weekday == weekday ]
+        return [p for p in self.programs if p.weekday == weekday]
 
     def extract_programs_by_start_time(self, start_time: str):
         """
         Extract programs by start_time.
-        
         Args:
             start_time (str): hhmm. 0000 - 2359
-        
         Returns:
             List[Program]: list of program instances.
         """
-        return [ p for p in self.programs if p.start_time == start_time ]
+        return [p for p in self.programs if p.start_time == start_time]
 
     def extract_programs_by_category(self, category: str):
         """
         Extract programs by category.
-        
         Args:
             category (str): english or comedian
-        
         Returns:
             List[Program]: list of program instances.
         """
-        return [ p for p in self.programs if p.category == category ]
+        return [p for p in self.programs if p.category == category]
 
     def extract_programs_by_name(self, name: str):
         """
         Extract programs by name.
-        
         Args:
             name (str): title of program.
-        
         Returns:
             List[Program]: list of program instances.
         """
-        return [ p for p in self.programs if p.name == name ]
+        return [p for p in self.programs if p.name == name]
 
     def extract_program(self, weekday: str, start_time: str):
         """
         Extract program by weekday, start_time, and category.
-        
         Args:
             weekday (str): monday is 0, tuesday is 1, ...
             start_time (str): hhmm. 0000 - 2359
             category (str): english or comedian
-        
         Returns:
             Program: program instance.
         """
-        res = [ p for p in self.programs if p.weekday == weekday and p.start_time == start_time ][0]
+        res = [
+            p for p in self.programs
+            if p.weekday == weekday and p.start_time == start_time
+            ][0]
         return res
 
 

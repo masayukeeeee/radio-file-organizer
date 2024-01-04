@@ -7,13 +7,12 @@ Methods:
 
 import re
 
+
 def is_unnamed_file(fn: str):
     """
     Check if the file is unnamed file.
-    
     Args:
         fn (str): file name
-
     Returns:
         bool: True if the file is unnamed file
     """
